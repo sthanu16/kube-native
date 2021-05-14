@@ -10,6 +10,12 @@ WORKDIR /usr/src/demo
 COPY . .
 CMD ["mvn", "-f", "unit-pom.xml",  "clean", "test"]
 
+
+FROM maven:3.6.3-jdk-8 AS test
+WORKDIR /usr/src/ddev
+COPY . .
+CMD ["mvn", "-f", "unit-pom.xml",  "clean", "test"]
+
 FROM java:8-jdk-alpine
 WORKDIR /app
 COPY --from=appserver /usr/src/demo/target/demo-0.0.1-SNAPSHOT.jar .
